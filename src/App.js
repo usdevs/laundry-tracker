@@ -75,9 +75,7 @@ function SimpleTable(props) {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <CustomTableCell component="th" scope="row" align="center">
-                {row.floor}
-              </CustomTableCell>
+              <CustomTableCell align="center">{row.floor}</CustomTableCell>
               <CustomTableCell align="center">{row.machine}</CustomTableCell>
               <CustomTableCell align="center">{row.A}</CustomTableCell>
               <CustomTableCell align="center">{row.B}</CustomTableCell>
