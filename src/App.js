@@ -18,7 +18,7 @@ var config = {
   storageBucket: "usc-website-206715.appspot.com",
   messagingSenderId: "115895791273"
 };
-firebase.initializeApp(config);
+firebase.initializeApp(config); 
 
 const styles = theme => ({
   root: {
@@ -48,9 +48,9 @@ function createData(floor, machine, A, B, C, D, E) {
 }
 
 const rows = [
-  createData('17 Floor', 'Washing Machine', 'Available', 'In Use', 'Available', 'Available', 'Available'),
-  createData('17 Floor', 'Dryer', 'Available', 'Available', 'In Use', 'Available', 'In Use'),
-  createData('9 Floor', 'Washing Machine', 'Available', 'In Use', 'Available', 'In Use', 'Not Applicable'),
+  createData('17 Floor', 'Washing Machine', 'Available', 'In Use', 'Available', 'Available', 'In Use'),
+  createData('17 Floor', 'Dryer', 'Available', 'Available', 'In Use', 'Available', 'Not Applicable'),
+  createData('9 Floor', 'Washing Machine', 'Available', 'In Use', 'Available', 'In Use', 'Available'),
   createData('9 Floor', 'Dryer', 'In Use', 'Available', 'In Use', 'Available', 'Not Applicable'),
 ];
 
@@ -59,30 +59,31 @@ function SimpleTable(props) {
 
   return (
     <Paper className={classes.root}>
+    <div align='center'><h1>Cinnamon College Laundry Tracker</h1></div>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <CustomTableCell>Floor</CustomTableCell>
-            <CustomTableCell>Machine</CustomTableCell>
-            <CustomTableCell>A</CustomTableCell>
-            <CustomTableCell>B</CustomTableCell>
-            <CustomTableCell>C</CustomTableCell>
-            <CustomTableCell>D</CustomTableCell>
-            <CustomTableCell>E</CustomTableCell>
+            <CustomTableCell align="center">Floor</CustomTableCell>
+            <CustomTableCell align="center">Machine</CustomTableCell>
+            <CustomTableCell align="center">A</CustomTableCell>
+            <CustomTableCell align="center">B</CustomTableCell>
+            <CustomTableCell align="center">C</CustomTableCell>
+            <CustomTableCell align="center">D</CustomTableCell>
+            <CustomTableCell align="center">E</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <CustomTableCell component="th" scope="row">
+              <CustomTableCell component="th" scope="row" align="center">
                 {row.floor}
               </CustomTableCell>
-              <CustomTableCell>{row.machine}</CustomTableCell>
-              <CustomTableCell>{row.A}</CustomTableCell>
-              <CustomTableCell>{row.B}</CustomTableCell>
-              <CustomTableCell>{row.C}</CustomTableCell>
-              <CustomTableCell>{row.D}</CustomTableCell>
-              <CustomTableCell>{row.E}</CustomTableCell>
+              <CustomTableCell align="center">{row.machine}</CustomTableCell>
+              <CustomTableCell align="center">{row.A}</CustomTableCell>
+              <CustomTableCell align="center">{row.B}</CustomTableCell>
+              <CustomTableCell align="center">{row.C}</CustomTableCell>
+              <CustomTableCell align="center">{row.D}</CustomTableCell>
+              <CustomTableCell align="center">{row.E}</CustomTableCell>
             </TableRow>
           ))}
         </TableBody>
