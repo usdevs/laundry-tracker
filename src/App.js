@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Floor from "./Floor";
 
 var config = {
   apiKey: "AIzaSyAb6W6yLDpM_E7qPgh3lOmw6iqERysHUDg",
@@ -19,6 +20,34 @@ var config = {
   messagingSenderId: "115895791273"
 };
 firebase.initializeApp(config);
+
+let database = firebase.firestore();
+
+firebase
+  .auth()
+  .signInAnonymously()
+  .then(user => {
+    let statusRefs = database.collection("laundryData");
+    return statusRefs.get();
+  })
+  .then(collection => {
+    collection.docs.forEach(doc => {
+      console.log(doc.id);
+      console.log(doc.data());
+    });
+  });
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>Cinnamon College Laundry Tracker</h1>
+        </header>
+      </div>
+    );
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -47,44 +76,38 @@ function createData(floor, machine, A, B, C, D, E) {
   return { id, floor, machine, A, B, C, D, E };
 }
 
-const rows = [
-  createData(
-    "17 Floor",
-    "Washing Machine",
-    "Available",
-    "In Use",
-    "Available",
-    "Available",
-    "In Use"
-  ),
-  createData(
-    "17 Floor",
-    "Dryer",
-    "Available",
-    "Available",
-    "In Use",
-    "Available",
-    "Not Applicable"
-  ),
-  createData(
-    "9 Floor",
-    "Washing Machine",
-    "Available",
-    "In Use",
-    "Available",
-    "In Use",
-    "Available"
-  ),
-  createData(
-    "9 Floor",
-    "Dryer",
-    "In Use",
-    "Available",
-    "In Use",
-    "Available",
-    "Not Applicable"
-  )
-];
+const data = {
+  17: {
+    washers: {
+      1: "Available",
+      2: "In Use",
+      3: "In Use",
+      4: "Available",
+      5: "Available"
+    },
+    dryers: {
+      1: "Available",
+      2: "In Use",
+      3: "In Use",
+      4: "Available"
+    }
+  },
+  9: {
+    washers: {
+      1: "Available",
+      2: "In Use",
+      3: "Available",
+      4: "Available",
+      5: "In Use"
+    },
+    dryers: {
+      1: "Available",
+      2: "Available",
+      3: "In Use",
+      4: "Available"
+    }
+  }
+};
 
 function SimpleTable(props) {
   const { classes } = props;
@@ -132,68 +155,8 @@ function Machine(props) {
   //handle firebase i/o
 }
 
-let database = firebase.firestore();
 
-firebase
-  .auth()
-  .signInAnonymously()
-  .then(user => {
-    let statusRefs = database.collection("laundryData");
-    return statusRefs.get();
-  })
-  .then(collection => {
-    collection.docs.forEach(doc => {
-      console.log(doc.id);
-      console.log(doc.data());
-    });
-  });
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>
-            Cinnamon College Laundry Tracker
-          </h1>
-        </header>
-      </div>
-    );
-  }
-}
-
-class Floor extends Component {
-  //Table
-  constructor(props){
-    super(props);
-    this.state = {size: 3}
-  }
-  render(){
-    let rows = [];
-    for (var i = 0; i < this.state.size; i++){
-      let rowID = `row${i}`
-      let cell = []
-      for (var idx = 0; idx < this.state.size; idx++){
-        let cellID = `cell${i}-${idx}`
-        cell.push(<td key={cellID} id={cellID}></td>)
-      }
-      rows.push(<tr key={i} id={rowID}>{cell}</tr>)
-    }
-    return(
-      <div className="container">
-        <div className="row">
-          <div className="col s12 board">
-            <table id="simple-board">
-               <tbody>
-                 {rows}
-               </tbody>
-             </table>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
 
 class Square extends Component {
   //Square cell of table
